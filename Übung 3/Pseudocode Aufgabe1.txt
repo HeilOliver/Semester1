@@ -1,0 +1,41 @@
+sorter(↓↑integer x, ↓↑integer y, ↓↑integer z)
+	integer biggest
+	integer middle
+	integer smallest
+	
+	
+	if (x > y && x > z) then
+		biggest := x
+	else 
+		if (y > x && y > z) then
+			biggest := y
+		else
+			biggest := z
+		end
+	end
+	
+	if (x < y && x < z) then
+		smallest := x
+	else 
+		if (y < x && y < z) then
+			smallest := y
+		else
+			smallest := z
+		end
+	end
+	
+	if (x < biggest && x > smallest) then
+		middle := x
+	else 
+		if (y < biggest && y > smallest) then
+			middle := y
+		else
+			middle := z
+		end
+	end
+	
+	x := smallest
+	y := middle
+	z := biggest
+	
+end -- sorter

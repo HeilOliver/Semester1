@@ -1,0 +1,91 @@
+findword(↓String text_plain, ↑String text_encoded) {
+	Const Integer C_enc_unen = 5	 //Das wie vielte Wort wird übersprungen
+	
+	Integer enc_wordcount = 0
+	Integer text_pos = 0
+	String text_partencode = ""
+	
+	While(text_pos < text_plain.length()){
+		if (enc_wordcount >= C_enc_unen) {
+			text_partencode += findWordinStr(text_plain, text_pos)
+		} else {
+			text_partencode += encodeWord(findWordinStr(text_plain, text_pos))
+		}
+	}
+	text_encoded = text_partencode
+}
+
+
+encodeWord(↓String word_plain, ↑String word_encr) {
+	Integer word_pos = 0
+	Integer word_length = word_plain.length()
+	Switch(word_plain[word_length-1]) {
+		case ',':
+			word_encr = '@'
+			--word_length 
+		Break
+
+		case '.':
+			word_encr = '#'
+			--word_length 
+		Break
+		
+		case ' ':
+			word_encr = RandChar()
+			--word_length
+		Break	
+	}
+	word_plain.SubString(0,word_length)
+	Switch (word_plain) {
+		case "heute":
+			word_encr = "nretsO" + word_encr
+		break;
+		
+		case "Bahnhof":
+			word_encr = "402U" + word_encr
+		break;
+		
+		case "alle":
+			word_encr = "hci" + word_encr
+		break;
+		
+		default:
+			while (word_pos < word_length) {
+				word_encr = word_plain[word_pos] + word_encr
+				++word_pos 
+			}
+	}
+}
+
+
+findWordinStr(↓String text, ↓↑Integer pos, ↑String word) {
+	boolean add = TRUE
+	while(pos < text.length() && text[pos] != ',' && text[pos] != '.' && text[pos] != ' ') {
+		word += text[pos]
+		++pos
+	}
+	while(pos < text.length() && (text[pos] == ',' || text[pos] == '.' || text[pos] == ' ')) {
+		if (add == TRUE) {
+			word += text[pos]
+			add = FALSE
+		}
+		++pos
+	}
+}
+
+
+RandChar(↑char rnd_char) {
+	Switch (rand() % 3) {
+		Case 0:
+			rnd_char = '?'
+		Break;
+
+		Case 1:
+			rnd_char = '%'
+		Break;
+		
+		Case 2:
+			rnd_char = '&'
+		Break;
+	}
+}
